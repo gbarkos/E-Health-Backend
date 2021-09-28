@@ -50,7 +50,7 @@ const userSchema = new mongoose.Schema({
         // }
     },
     familyDoctor:{ 
-        type: Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'Doctor'
     }
 });

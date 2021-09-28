@@ -12,7 +12,7 @@ exports.getUser = (req, res) => {
         message : 'This user is not yet defined'
     })
 };
-exports.createUser = (req, res) => {
+exports.createUser = async (req, res) => {
     try{
         const newUser = await User.create(req.body);
 
