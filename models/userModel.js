@@ -30,12 +30,12 @@ const userSchema = new mongoose.Schema({
     email:{
         type:String,
         required: [true, 'User must have a email'],
-        trim: true,
-        validate(value) {
-            if (!validator.isEmail(value)) {
-                throw new Error('Email is invalid')
-            }
-        }
+        trim: true
+        // validate(value) {
+        //     if (!validator.isEmail(value)) {
+        //         throw new Error('Email is invalid')
+        //     }
+        // }
     },
     phoneNumber:{
         type: Number,

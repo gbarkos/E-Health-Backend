@@ -5,9 +5,7 @@ const router = express.Router();
 
 router
     .route("/")
-    .post((req, res) => {
-        res.status(201).json({"status": "success"});
-    });
+    .post(userController.createUser);
     // .get(userController.getAllUsers)
     // .post(userController.createUser);
 
