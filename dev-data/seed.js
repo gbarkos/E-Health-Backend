@@ -1,4 +1,3 @@
-const mongoose = require('mongoose');
 const Doctor = require('./../models/doctorModel');
 const Hospital = require('./../models/hospitalModel');
 //const Diagnosis = require('./../models/diagnosisModel');
@@ -72,12 +71,12 @@ const hospitalData = [
 
 const deleteData = async () => {
     try{
-        await Appointment.deleteMany();
-        await Prescription.delteMany();
-        await Diagnosis.deleteMany();
+        //await Appointment.deleteMany();
+        //await Prescription.delteMany();
+        //await Diagnosis.deleteMany();
         await Doctor.deleteMany();
         await Hospital.deleteMany();
-        await User.deleteMany();
+        //await User.deleteMany();
         console.log('Data succesfully deleted');
     }catch(err){
         console.log(err);
@@ -94,9 +93,9 @@ const insertData = async () => {
     }
 }
 
-function seedDB(){
-    deleteData();
-    insertData();
+async function seedDB(){
+    await deleteData();
+    await insertData();
 }
 
 module.exports = seedDB;
