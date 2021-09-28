@@ -6,7 +6,7 @@ const router = express.Router();
 router
     .route("/")
     .post((req, res) => {
-        res.statusCode(201).json({"status": "success"});
+        res.status(201).json({"status": "success"});
     });
     // .get(userController.getAllUsers)
     // .post(userController.createUser);
