@@ -14,7 +14,7 @@ app.use(express.json()); //middleware
 
 
 //routes
-//app.use('/api/v1/users', userRouter);
+app.use('/api/v1/users', userRouter);
 
 //app export to use in other files
 module.exports = app;
