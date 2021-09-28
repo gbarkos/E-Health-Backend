@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const diagnosisSchema = mongoose.Schema({
+const diagnosisSchema = new mongoose.Schema({
     hospital:{
         type: Schema.Types.ObjectId,
         ref: 'Hospital',
