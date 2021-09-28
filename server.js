@@ -1,6 +1,7 @@
 //dependencies
 const mongoose = require('mongoose');
 const app = require('./app');
+const seedDB = require('./dev-data/seed');
 const dotenv = require('dotenv');
 
 //environment variables config
@@ -13,6 +14,9 @@ mongoose.connect(DB, {
     useCreateIndex: true,
     useFindAndModify: false
 }).then(() => console.log("DB connection succesfull"));
+
+//seed database
+seedDB();
 
 //start server
 const PORT = process.env.PORT || 3000;
