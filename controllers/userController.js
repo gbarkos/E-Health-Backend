@@ -15,12 +15,12 @@ exports.getUser = (req, res) => {
 };
 exports.createUser = async (req, res) => {
     try{
-        newBody = req.body;
-        newBody.bloodtype = "sdsfsdf";
+        let newBody = {...req.body};
+        newBody.bloodtype = helpers.randomBloodType();
         newBody.familyDoctor = await helpers.findaDoctor();
         const newUser = await User.create(newBody);
 
-        res.status(201).json({
+        res.status(200).json({
             status : 'success',
             data: {
                 user: newUser
