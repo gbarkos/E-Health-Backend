@@ -14,6 +14,7 @@ exports.getUser = (req, res) => {
 };
 exports.createUser = async (req, res) => {
     try{
+        req.body.bloodtype = "mybloodtype";
         const newUser = await User.create(req.body);
 
         res.status(201).json({
