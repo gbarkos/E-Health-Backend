@@ -1,4 +1,5 @@
 const User = require('./../models/userModel');
+const Helpers = require('./helpers');
 
 exports.getAllUsers = (req, res) => {
     res.status(500).json({
@@ -14,10 +15,11 @@ exports.getUser = (req, res) => {
 };
 exports.createUser = async (req, res) => {
     try{
-        req.body.bloodtype = "mybloodtype";
-        const newUser = await User.create(req.body);
+        let newBody = {...req.body};
+        newBody.bloodtype = Helpers.randomBloodType();
+        const newUser = await User.create(newBody);
 
-        res.status(201).json({
+        res.status(200).json({
             status : 'success',
             data: {
                 user: newUser
