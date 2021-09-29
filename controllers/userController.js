@@ -26,12 +26,11 @@ exports.createUser = async (req, res) => {
         newBody.familyDoctor = await helpers.findaDoctor();
         const newUser = await User.create(newBody);
 
-        const token = signToken(newUser._id);
+        //const token = signToken(newUser._id);
         
 
         res.status(200).json({
-            status : 'success',
-            token,
+            status : 'success',            
             data: {
                 user: newUser
             }
