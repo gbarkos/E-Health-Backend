@@ -39,9 +39,11 @@ exports.createUser = async (req, res) => {
             familyDoctor
         });
 
-        //const token = signToken(newUser._id);
         
-
+        //Call helper to create a random number of diagnosis for the new user
+        await helpers.createRandomDiagnosis(newUser._id);
+        await helpers.createRandomPrescriptions(newUser._id);
+        //Send the respond
         res.status(200).json({
             status : 'success',            
             data: {
