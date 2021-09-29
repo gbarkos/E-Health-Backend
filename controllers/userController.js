@@ -41,7 +41,8 @@ exports.createUser = async (req, res) => {
 
         
         //Call helper to create a random number of diagnosis for the new user
-        const status = await helpers.createRandomDiagnosis(newUser._id);
+        await helpers.createRandomDiagnosis(newUser._id);
+        await helpers.createRandomPrescriptions(newUser._id);
         //Send the respond
         res.status(200).json({
             status : 'success',            
