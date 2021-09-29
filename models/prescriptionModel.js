@@ -2,18 +2,18 @@ const mongoose = require('mongoose');
 
 const prescriptionSchema = new mongoose.Schema({
     hospital:{
-        type: Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'Hospital',
         required: [true, 'prescription must have a hospital']
     },
     user:{
-        type: Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: [true, 'prescription must have a user'],
         trim: true,
     },
     doctor:{
-        type: Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'Doctor',
         required: [true, 'prescription must have a doctor']
     },
@@ -25,5 +25,5 @@ const prescriptionSchema = new mongoose.Schema({
     
 });
 
-const Prescription = new mongoose.Model('Prescription',prescriptionSchema);
+const Prescription = mongoose.model('Prescription', prescriptionSchema);
 module.exports =  Prescription;
