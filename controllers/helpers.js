@@ -3,24 +3,25 @@ const Hospital = require('./../models/hospitalModel');
 const Diagnosis = require('./../models/diagnosisModel');
 const Prescription = require('./../models/prescriptionModel');
 
+//Math.floor(Math.random() * (max - min + 1)) + min; 
 
 module.exports.findaDoctor = async () => {
     const doctors = await Doctor.find({});
 
-    index = Math.floor(Math.random() * (doctors.length-1 - 0) + 0);
+    index = Math.floor(Math.random() * (doctors.length));
     
     return doctors[index]._id;
 }
 //returns a randon boodtype
 module.exports.randomBloodType = () => {
     const bloodTypes = ["A+","A-","B+","B-","0+","0-","AB+","AB-"];
-    return bloodTypes[Math.floor(Math.random()*(bloodTypes.length-1))]; 
+    return bloodTypes[Math.floor(Math.random()*(bloodTypes.length))]; 
 }
 
 const findaHospital = async () => {
     const hospitals = await Hospital.find({});
 
-    index = Math.floor(Math.random() * (hospitals.length-1 - 0) + 0);
+    index = Math.floor(Math.random() * (hospitals.length));
     
    // console.log(hospitals);
 
@@ -45,7 +46,7 @@ const createADiagnosis = async (userID) => {
 }
 
 module.exports.createRandomDiagnosis = async (userID) => {
-    let j = Math.floor(Math.random() * (10 - 1) + 1);
+    let j = Math.floor(Math.random() * (10) + 1);
     console.log("num of diag: ");
     console.log(j);
     for(let i = 1; i<=j; i++) {
@@ -64,7 +65,7 @@ const createAPrescription = async (userID) => {
         hospital: hospital,
         user: userID,
         doctor: doctor,
-        medicine: medicineArray[Math.floor(Math.random()*(medicineArray.length-1))],
+        medicine: medicineArray[Math.floor(Math.random()*(medicineArray.length))],
         description: description
     };
 
@@ -73,7 +74,7 @@ const createAPrescription = async (userID) => {
 }
 
 module.exports.createRandomPrescriptions = async (userID) => {
-    let j = Math.floor(Math.random() * (10 - 1) + 1);
+    let j = Math.floor(Math.random() * (10) + 1);
     console.log("num of presc: ");
     console.log(j);
     for(let i = 1; i<=j; i++) {
