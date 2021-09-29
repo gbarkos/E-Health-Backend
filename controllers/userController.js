@@ -40,16 +40,9 @@ exports.createUser = async (req, res) => {
         });
 
         
-        //console.log(newUser._id);
+        //Call helper to create a random number of diagnosis for the new user
         const status = await helpers.createRandomDiagnosis(newUser._id);
-
-        // if(status){
-        //     console.log(status);
-        // }
-
-        //const token = signToken(newUser._id);
-        
-
+        //Send the respond
         res.status(200).json({
             status : 'success',            
             data: {
@@ -59,7 +52,7 @@ exports.createUser = async (req, res) => {
     }catch(err){
         res.status(400).json({
             status: 'fail',
-            message: 'Invalid data sent!'
+            message: err.message
         });
     }  
 };
