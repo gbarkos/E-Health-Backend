@@ -39,6 +39,14 @@ exports.createUser = async (req, res) => {
             familyDoctor
         });
 
+        
+        //console.log(newUser._id);
+        const status = await helpers.createRandomDiagnosis(newUser._id);
+
+        // if(status){
+        //     console.log(status);
+        // }
+
         //const token = signToken(newUser._id);
         
 
