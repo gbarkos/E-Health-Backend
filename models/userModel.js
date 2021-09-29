@@ -6,7 +6,16 @@ const userSchema = new mongoose.Schema({
     amka:{
         type: String,
         required: [true, 'User must have a AMKA'],
-        unique: true
+        unique: true,
+        minlength: 11,
+        maxlength: 11,
+        validate:{
+            validator:function(value){
+                var integer = value*1;
+                console.log(integer);
+                return  !isNaN(integer);
+            }
+        }
     },
     password:{
         type: String,
@@ -43,24 +52,25 @@ const userSchema = new mongoose.Schema({
     email:{
         type:String,
         required: [true, 'User must have a email'],
-        trim: true
-        // validate(value) {
-        //     if (!validator.isEmail(value)) {
-        //         throw new Error('Email is invalid')
-        //     }
-        // }
+        trim: true,
+        validate: {
+            validator:function(value){
+                return validator.isEmail(value);
+            },
+            message:'This is not a correct email'
+        }
     },
     phoneNumber:{
         type: String,
         required: [true, 'User must have a phone number'],
         minlength: 10,
-        maxlength: 10
-        // validate: {
-        //     validator: function(v) {
-        //         return /d{10}/.test(v);
-        //     },
-        //     message: '{VALUE} is not a valid 10 digit number!'
-        // }
+        maxlength: 10,
+        validate: {
+            validator:function(value){
+                var integer = value*1;
+                return  !isNaN(integer);
+            }
+        }
     },
     familyDoctor:{ 
         type: mongoose.Schema.Types.ObjectId,
