@@ -19,12 +19,25 @@ exports.getUser = (req, res) => {
         message : 'This user is not yet defined'
     })
 };
+//Method for user creation
 exports.createUser = async (req, res) => {
     try{
-        let newBody = {...req.body};
-        newBody.bloodtype = helpers.randomBloodType();
-        newBody.familyDoctor = await helpers.findaDoctor();
-        const newUser = await User.create(newBody);
+        //call for random bloodtype
+        const bloodtype = helpers.randomBloodType();
+        //call for random family doctor
+        const familyDoctor = await helpers.findaDoctor();
+        //Seve instance to db and return it to newUser
+        const newUser = await User.create({
+            amka: req.body.amka,
+            password: req.body.password,
+            confirmPassword: req.body.confirmPassword,
+            name: req.body.name,
+            surname: req.body.surname,
+            email: req.body.email,
+            phoneNumber: req.body.phoneNumber,
+            bloodtype,
+            familyDoctor
+        });
 
         //const token = signToken(newUser._id);
         
