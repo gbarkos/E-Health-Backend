@@ -10,7 +10,8 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: [true, 'User must have a password'],
         minlength: 8,
-        trim: true
+        trim: true,
+        select: true
     },
     name:{
         type: String,
@@ -55,6 +56,10 @@ const userSchema = new mongoose.Schema({
     }
 });
 
+userSchema.methods.correctPassword =  function(candidatePassword, userPassword){
+
+    return  candidatePassword.localeCompare(userPassword);
+};
 
 const User = mongoose.model('User', userSchema);
 
