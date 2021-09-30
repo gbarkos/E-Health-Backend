@@ -22,8 +22,6 @@ const findaHospital = async () => {
     const hospitals = await Hospital.find({});
 
     index = Math.floor(Math.random() * (hospitals.length));
-    
-   // console.log(hospitals);
 
     return hospitals[index]._id;
 }

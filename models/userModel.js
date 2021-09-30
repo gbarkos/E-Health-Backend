@@ -14,7 +14,8 @@ const userSchema = new mongoose.Schema({
                 var integer = value*1;
                 console.log(integer);
                 return  !isNaN(integer);
-            }
+            },
+            message:'AMKA must be a string of numbers'
         }
     },
     password:{
@@ -22,7 +23,7 @@ const userSchema = new mongoose.Schema({
         required: [true, 'User must have a password'],
         minlength: 8,
         trim: true,
-        select: true
+        select: false
     },
     confirmPassword:{
         type: String,
@@ -69,7 +70,8 @@ const userSchema = new mongoose.Schema({
             validator:function(value){
                 var integer = value*1;
                 return  !isNaN(integer);
-            }
+            },
+            message:'Phone must be a string of numbers'
         }
     },
     familyDoctor:{ 
