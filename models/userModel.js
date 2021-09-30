@@ -12,7 +12,6 @@ const userSchema = new mongoose.Schema({
         validate:{
             validator:function(value){
                 var integer = value*1;
-                console.log(integer);
                 return  !isNaN(integer);
             },
             message:'AMKA must be a string of numbers'
@@ -80,9 +79,9 @@ const userSchema = new mongoose.Schema({
     }
 });
 
-userSchema.methods.correctPassword =  function(candidatePassword, userPassword){
+userSchema.methods.correctPassword = async function(candidatePassword, userPassword){
 
-    return  candidatePassword.localeCompare(userPassword);
+    return await bcrypt.compare(candidatePassword,userPassword);
 };
 //Changes before save
 userSchema.pre('save', async function (next) {

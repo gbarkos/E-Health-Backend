@@ -1,11 +1,11 @@
-//const jwt = require('jsonwebtoken');
+const jwt = require('jsonwebtoken');
 const User = require('./../models/userModel');
 const helpers = require('./helpers');
-// const signToken = id =>{
-//     jwt.sign({ id }, process.env.JWT_SECRET, {
-//         expiresIn: process.env.JWTEXPIRES_IN
-//     })
-// };
+const signToken = id => {
+    return jwt.sign({ id }, process.env.JWT_SECRET, {
+    expiresIn: process.env.JWTEXPIRES_IN
+    });
+};
 exports.getAllUsers = async (req, res, next) => {
     const users = await User.find();
     res.status(500).json({
@@ -39,13 +39,15 @@ exports.createUser = async (req, res) => {
             familyDoctor
         });
 
-        
+        const token = signToken( newUser._id);
+
         //Call helper to create a random number of diagnosis for the new user
         await helpers.createRandomDiagnosis(newUser._id);
         await helpers.createRandomPrescriptions(newUser._id);
         //Send the respond
         res.status(200).json({
-            status : 'success',            
+            status : 'success',    
+            token,        
             data: {
                 user: newUser
             }
@@ -81,12 +83,13 @@ exports.login = async (req, res, next) => {
 
     console.log(user);
 
-    if(!user ||  user.correctPassword(password, user.password)!=0){
+    if(!user ||  !await(user.correctPassword(password, user.password))){
         return res.status(401).json({msg: "Incorrect amka or password"})
     }
 
-    // const token = signToken(user._id);
+    const token = signToken(user._id);
     res.status(200).json({
+        token,
         status: 'success'
     });
 };
