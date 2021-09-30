@@ -12,7 +12,6 @@ const userSchema = new mongoose.Schema({
         validate:{
             validator:function(value){
                 var integer = value*1;
-                console.log(integer);
                 return  !isNaN(integer);
             }
         }
