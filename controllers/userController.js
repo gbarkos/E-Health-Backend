@@ -79,7 +79,7 @@ exports.login = async (req, res, next) => {
     if(!amka || !password){
         return res.status(400).json({msg: "Please provide amka and password"})
     }
-    const user = await User.findOne({amka});
+    const user = await User.findOne({amka}).select("+password");
 
     console.log(user);
 
