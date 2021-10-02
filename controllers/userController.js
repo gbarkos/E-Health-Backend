@@ -1,11 +1,15 @@
 const jwt = require('jsonwebtoken');
 const User = require('./../models/userModel');
 const helpers = require('./helpers');
+const catchAsync = require('./../utils/catchAsync');
+const AppError = require('./../utils/appError');
+
 const signToken = id => {
     return jwt.sign({ id }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWTEXPIRES_IN
     });
 };
+
 exports.getAllUsers = async (req, res, next) => {
     const users = await User.find();
     res.status(500).json({
@@ -13,6 +17,7 @@ exports.getAllUsers = async (req, res, next) => {
         message : 'This user is not yet defined'
     })
 };
+
 exports.getUser = (req, res) => {
     res.status(500).json({
         status : 'error',
@@ -20,8 +25,8 @@ exports.getUser = (req, res) => {
     })
 };
 //Method for user creation
-exports.createUser = async (req, res) => {
-    try{
+exports.createUser = catchAsync( async (req, res, next) => {
+    
         //call for random bloodtype
         const bloodtype = helpers.randomBloodType();
         //call for random family doctor
@@ -44,6 +49,10 @@ exports.createUser = async (req, res) => {
         //Call helper to create a random number of diagnosis for the new user
         await helpers.createRandomDiagnosis(newUser._id);
         await helpers.createRandomPrescriptions(newUser._id);
+
+        //remove password fron the output
+        newUser.password = undefined;
+         
         //Send the respond
         res.status(200).json({
             status : 'success',    
@@ -52,19 +61,16 @@ exports.createUser = async (req, res) => {
                 user: newUser
             }
         });
-    }catch(err){
-        res.status(400).json({
-            status: 'fail',
-            message: err.message
-        });
-    }  
-};
+    
+});
+
 exports.updateUser = (req, res) => {
     res.status(500).json({
         status : 'error',
         message : 'This user is not yet defined'
     })
 };
+
 exports.deleteUser = (req, res) => {
     res.status(500).json({
         status : 'error',
@@ -72,19 +78,17 @@ exports.deleteUser = (req, res) => {
     })
 };
 
-
-
-exports.login = async (req, res, next) => {
+exports.login = catchAsync(async (req, res, next) => {
     const { amka, password } = req.body;
     if(!amka || !password){
-        return res.status(400).json({msg: "Please provide amka and password"})
+        return next(new AppError('Please provide amka and password', 400));
     }
     const user = await User.findOne({amka}).select("+password");
 
     console.log(user);
 
     if(!user ||  !await(user.correctPassword(password, user.password))){
-        return res.status(401).json({msg: "Incorrect amka or password"})
+        return next(new AppError('Incorrect amka or password', 401));
     }
 
     const token = signToken(user._id);
@@ -92,4 +96,4 @@ exports.login = async (req, res, next) => {
         token,
         status: 'success'
     });
-};
+});
