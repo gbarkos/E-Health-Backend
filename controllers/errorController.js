@@ -42,15 +42,16 @@ module.exports = (err, req, res, next) => {
     if (error.name === 'ValidationError') error = handleValidationErrorDB(error);
     if (error.name === 'JsonWebTokenError') error = handleJWTError();
     if (error.name === 'TokenExpiredError') error = handleJWTExpiredError();
-    
+    //For operational errors
     if (error.isOperational) {
-        
+        //Send response with the error message
         res.status(error.statusCode).json({
             status: error.status,
             error: error,
             message: error.message,
             stack: error.stack
         });
+    //If the error is not operational do not send the error data to the user
     } else {
         // 1) Log error
         console.error('ERROR 💥', error);
