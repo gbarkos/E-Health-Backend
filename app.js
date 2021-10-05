@@ -17,6 +17,7 @@ const app = express();
 
 //middlewares
 
+
 //Set security HTTP headers
 app.use(helmet());
 
@@ -44,6 +45,13 @@ app.use(mongoSanitize());
 
 //Prevent html javascript injection
 app.use(xss());
+
+app.use((req, res, next) => {
+    req.requestTime = new Date().toISOString();
+    // console.log(req.headers);
+    next();
+});
+
 
 //routes
 app.use('/api/v1/users', userRouter);

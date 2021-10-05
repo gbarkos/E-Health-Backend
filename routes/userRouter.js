@@ -5,12 +5,13 @@ const router = express.Router();
 
 router.post('/signup', userController.createUser);
 router.post('/login', userController.login);
+router.get('/myProfile', userController.protect, userController.getMyProfile);
 
 router
     .route("/")
     //.post(userController.createUser);
-    // .get(userController.getAllUsers)
-    // .post(userController.createUser);
+    //.get( userController.protect);
+    //.post(userController.createUser);
 
 router
     .route("/:id")

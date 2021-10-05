@@ -1,3 +1,4 @@
+const { promisify } = require('util');
 const jwt = require('jsonwebtoken');
 const User = require('./../models/userModel');
 const helpers = require('./helpers');
@@ -11,19 +12,24 @@ const signToken = id => {
 };
 
 exports.getAllUsers = async (req, res, next) => {
-    const users = await User.find();
-    res.status(500).json({
-        status : 'error',
-        message : 'This user is not yet defined'
-    })
-};
+    try{
+        const users = await User.find();
+        res.status(200).json({
+            status: 'success',
+            results: users.length,
+            data: {
+            users
+            }
+        });
+    }catch(err){
+        res.status(500).json({
+            status : 'error',
+            message : 'This user is not yet defined'
+        })
+    }  
+    
+}
 
-exports.getUser = (req, res) => {
-    res.status(500).json({
-        status : 'error',
-        message : 'This user is not yet defined'
-    })
-};
 //Method for user creation
 exports.createUser = catchAsync( async (req, res, next) => {
     
@@ -96,4 +102,44 @@ exports.login = catchAsync(async (req, res, next) => {
         token,
         status: 'success'
     });
+
 });
+
+exports.protect = async(req, res, next) => {
+    // 1) getting token and check if it's there
+    let token;
+    if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
+        token = req.headers.authorization.split(' ')[1];
+    }
+
+
+    if(!token){
+        return next(res.status(401).json({msg: "You are not logged in! Please login to get access."}));
+    }
+    // 2) Verification token
+    try{
+        const secret = process.env.JWT_SECRET;
+        const decoded  = await promisify(jwt.verify)(token, secret);
+        console.log(decoded);
+        const user = await User.findById(decoded.id);
+        req.user = user;
+        next();
+    }catch(err){
+        res.status(401).json({
+            status: 'fail',
+            message : 'Ivalid token, please log in again'
+        });
+    }  
+    
+
+};
+
+exports.getMyProfile = async(req, res) => {
+    user = req.user;
+    res.status(200).json({
+            status: 'success',
+            data: {
+            user
+            }
+        });
+};
