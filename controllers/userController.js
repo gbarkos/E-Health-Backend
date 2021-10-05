@@ -113,7 +113,8 @@ exports.protect = async(req, res, next) => {
     }
     // 2) Verification token
     try{
-        const decoded  = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
+        const secret = process.env.JWT_SECRET;
+        const decoded  = await promisify(jwt.verify)(token, secret);
         console.log(decoded);
         const user = await User.findById(decoded.id);
         req.user = user;
