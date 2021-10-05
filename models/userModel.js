@@ -7,8 +7,8 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: [true, 'User must have a AMKA'],
         unique: true,
-        minlength: 11,
-        maxlength: 11,
+        minlength: [11, 'AMKA length has to be 11'],
+        maxlength: [11, 'AMKA length has to be 11'],
         validate:{
             validator:function(value){
                 var integer = value*1;
@@ -20,7 +20,7 @@ const userSchema = new mongoose.Schema({
     password:{
         type: String,
         required: [true, 'User must have a password'],
-        minlength: 8,
+        minlength: [8, 'Password length has to be at least 8'],
         trim: true,
         select: false
     },
@@ -63,8 +63,8 @@ const userSchema = new mongoose.Schema({
     phoneNumber:{
         type: String,
         required: [true, 'User must have a phone number'],
-        minlength: 10,
-        maxlength: 10,
+        minlength: [10, 'Phone number length has to be 10'],
+        maxlength: [10, 'Phone number length has to be 10'],
         validate: {
             validator:function(value){
                 var integer = value*1;
