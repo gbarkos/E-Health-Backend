@@ -56,15 +56,18 @@ exports.login = catchAsync(async (req, res, next) => {
     if(!amka || !password){
         return next(new AppError('Please provide amka and password', 400));
     }
-    const user = await User.findOne({amka}).select("+password");
-
-    console.log(user);
+    const user = await User.findOne({amka}).select("+password");    
 
     if(!user ||  !await(user.correctPassword(password, user.password))){
         return next(new AppError('Incorrect amka or password', 401));
     }
-
+    
     const token = signToken(user._id);
+
+    console.log({
+        token,
+        status: 'success'
+    });
     res.status(200).json({
         token,
         status: 'success'
