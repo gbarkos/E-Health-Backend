@@ -1,7 +1,8 @@
 const Doctor = require('./../models/doctorModel');
 const Hospital = require('./../models/hospitalModel');
-//const Diagnosis = require('./../models/diagnosisModel');
-//const Prescription = require('./../models/prescriptionModel');
+const Diagnosis = require('./../models/diagnosisModel');
+const Prescription = require('./../models/prescriptionModel');
+const User = require('./../models/userModel');
 
 const doctorData = [
     {
@@ -69,15 +70,15 @@ const hospitalData = [
     }
 ];
 
-const deleteData = async () => {
+const deleteData = async (connection) => {
     try{
-        //await Appointment.deleteMany();
-        //await Prescription.delteMany();
-        //await Diagnosis.deleteMany();
+        // await Appointment.deleteMany();
+        await Prescription.deleteMany();
+        await Diagnosis.deleteMany();
         await Doctor.deleteMany();
         await Hospital.deleteMany();
-        //await User.deleteMany();
-        console.log('Data succesfully deleted');
+        await User.deleteMany();
+        console.log('DB succesfully dumped');
     }catch(err){
         console.log(err);
     }
@@ -87,7 +88,7 @@ const insertData = async () => {
     try{
         await Doctor.create(doctorData);
         await Hospital.create(hospitalData);
-        console.log('Data succesfully inserted')
+        console.log('Doctor and Hospital data succesfully inserted');
     }catch(err){
         console.log(err);
     }
