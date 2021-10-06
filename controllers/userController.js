@@ -11,25 +11,6 @@ const signToken = id => {
     });
 };
 
-exports.getAllUsers = async (req, res, next) => {
-    try{
-        const users = await User.find();
-        res.status(200).json({
-            status: 'success',
-            results: users.length,
-            data: {
-            users
-            }
-        });
-    }catch(err){
-        res.status(500).json({
-            status : 'error',
-            message : 'This user is not yet defined'
-        })
-    }  
-    
-}
-
 //Method for user creation
 exports.createUser = catchAsync( async (req, res, next) => {
     
@@ -70,20 +51,6 @@ exports.createUser = catchAsync( async (req, res, next) => {
     
 });
 
-exports.updateUser = (req, res) => {
-    res.status(500).json({
-        status : 'error',
-        message : 'This user is not yet defined'
-    })
-};
-
-exports.deleteUser = (req, res) => {
-    res.status(500).json({
-        status : 'error',
-        message : 'This user is not yet defined'
-    })
-};
-
 exports.login = catchAsync(async (req, res, next) => {
     const { amka, password } = req.body;
     if(!amka || !password){
@@ -120,7 +87,7 @@ exports.protect = catchAsync(async(req, res, next) => {
         const secret = process.env.JWT_SECRET;
         const decoded  = await promisify(jwt.verify)(token, secret);
         console.log(decoded);
-        const user = await User.findById(decoded.id);
+        const user = await User.findById(decoded.id).populate('familyDoctor');
         req.user = user;
         next();
 });
