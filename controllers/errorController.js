@@ -10,7 +10,7 @@ const handleDuplicateFieldsDB = err => {
   const duplicated = err.keyValue;
   const key = Object.keys(duplicated);
   
-  const message = `User with ${key}: ${duplicated[key]} already exists!`;
+  const message = `User with ${key.toString().toUpperCase()}: ${duplicated[key]} already exists!`;
   return new AppError(message, 400);
 };
 
@@ -41,7 +41,7 @@ module.exports = (err, req, res, next) => {
     if (error.name === 'ValidationError') error = handleValidationErrorDB(error);
     if (error.name === 'JsonWebTokenError') error = handleJWTError();
     if (error.name === 'TokenExpiredError') error = handleJWTExpiredError();
-    
+
     //For operational errors
     if (error.isOperational) {
         //Send response with the error message
