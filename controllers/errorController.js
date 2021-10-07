@@ -51,11 +51,12 @@ module.exports = (err, req, res, next) => {
         });
       
         console.error('ERROR 💥', error);
+        //console.error('ERROR 💥', error.stack);
     //If the error is not operational do not send the error data to the user
     } else {
         // 1) Log error
         console.error('ERROR 💥', error);
-    
+        console.error('ERROR 💥', error.stack);
         // 2) Send generic message
         res.status(500).json({
           status: 'error',
