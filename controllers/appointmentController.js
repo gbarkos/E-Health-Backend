@@ -16,8 +16,8 @@ exports.getAppointments = catchAsync (async (req, res, next) => {
 });
 
 exports.getSingleAppointment = catchAsync (async (req, res, next) => {
-    const appointment = await Appointment.find(req.user_id).populate('hospital').populate('user');
-    if(!appointment) return next(new AppError("Prescription not found", 404));
+    const appointment = await Appointment.findOne({_id: req.params.id}).populate('hospital').populate('user');
+    if(!appointment) return next(new AppError("PAppointment not found", 404));
     res.status(200).json({
         status: "success",
         data : {
