@@ -1,15 +1,16 @@
 const express = require('express');
-const appointmentController = require('./../controllers/userController');
+const appointmentController = require('./../controllers/appointmentController');
+const userController = require('../controllers/userController');
 
 const router = express.Router();
 
 router
     .route('/')
     .get(userController.protect, appointmentController.getAppointments)
-    .post(appointmentController.createAppointment);
+    .post(userController.protect, appointmentController.createAppointment);
 
 router
     .route('/:id')
-    .get(userController.protect, userController.getSingleAppointment);
+    .get(userController.protect, appointmentController.getSingleAppointment);
 
 module.exports = router;

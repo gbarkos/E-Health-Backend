@@ -3,6 +3,7 @@ const Hospital = require('./../models/hospitalModel');
 const Diagnosis = require('./../models/diagnosisModel');
 const Prescription = require('./../models/prescriptionModel');
 const User = require('./../models/userModel');
+const Appointment = require('./../models/appointmentModel');
 
 const doctorData = [
     {
@@ -72,7 +73,7 @@ const hospitalData = [
 
 const deleteData = async (connection) => {
     try{
-        // await Appointment.deleteMany();
+        await Appointment.deleteMany();
         await Prescription.deleteMany();
         await Diagnosis.deleteMany();
         await Doctor.deleteMany();
