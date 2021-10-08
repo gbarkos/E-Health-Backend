@@ -93,7 +93,7 @@ exports.protect = catchAsync(async(req, res, next) => {
     const user = await User.findById(decoded.id).populate('familyDoctor');
 
     if(!user){
-        return next(new AppError('Token does not belong to an existed user! Please login to get access.', 401));
+        return next(new AppError('Token does not belong to an existing user! Please login to get access.', 401));
     }
     req.user = user;
     next();
