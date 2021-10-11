@@ -5,7 +5,7 @@ const Prescription = require('../models/prescriptionModel');
 //GET method for Prescriptions 
 exports.getMyPrescriptions = catchAsync( async (req, res, next) => {
 
-    prescriptions = await Prescription.find({user: req.user._id}).populate('doctor', 'name surname').populate('hospital', 'name');
+    prescriptions = await Prescription.find({user: req.user._id}).populate('doctor').populate('hospital');
 
     if(!prescriptions) {
         return next(new AppError('User has no Prescriptions', 404));
