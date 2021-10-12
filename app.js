@@ -11,7 +11,7 @@ const AppError = require('./utils/appError');
 
 //Custom dependencies
 const userRouter = require('./routes/userRouter');
-const PrescriptionsRouter = require('./routes/prescriptionsRouter');
+const prescriptionsRouter = require('./routes/prescriptionsRouter');
 
 //app decleration
 const app = express();
@@ -54,7 +54,7 @@ app.use((req, res, next) => {
 
 //routes
 app.use('/api/v1/users', userRouter);
-app.use('/api/v1/prescriptions', PrescriptionsRouter);
+app.use('/api/v1/prescriptions', prescriptionsRouter);
 
 //For all undefined routes throw an error
 app.all('*', (req, res, next) => {
