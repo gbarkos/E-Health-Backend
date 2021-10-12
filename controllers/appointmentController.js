@@ -5,7 +5,7 @@ const Hospital = require('../models/hospitalModel');
 
 
 exports.getAppointments = catchAsync (async (req, res, next) => {
-    const appointments = await Appointment.find().populate('hospital').populate('user');
+    const appointments = await Appointment.find({user: req.user._id}).populate('hospital').populate('user');
     if(!appointments) return next(new AppError("No prescriptions found", 404));
     res.status(200).json({
         status: "success",
