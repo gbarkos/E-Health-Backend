@@ -9,10 +9,10 @@ const AppError = require('./../utils/appError');
 exports.getAllDiagnoses = catchAsync( async(req, res, next) => {
     const user = req.user;
 
-    diagnoses = await Diagnosis.find({user: user._id}).populate('hospital').populate('user').populate('doctor');
+    diagnoses = await Diagnosis.find({user: user._id}).populate('hospital').populate('doctor');
 
     if(!diagnoses) new AppError('No diagnosis found with that ID', 404);
-    // SEND RESPONSE
+  
     res.status(200).json({
       status: 'success',
       results: diagnoses.length,
@@ -23,7 +23,7 @@ exports.getAllDiagnoses = catchAsync( async(req, res, next) => {
 });
 
 exports.getDiagnosis = catchAsync(async (req, res, next) => {
-    const diagnosis = await Diagnosis.find({ _id: req.params.id }).populate('hospital').populate('user').populate('doctor');
+    const diagnosis = await Diagnosis.find({ _id: req.params.id }).populate('hospital').populate('doctor');
 
     if (!diagnosis) {
       return next(new AppError('No diagnosis found with that ID', 404));
