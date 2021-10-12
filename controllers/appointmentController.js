@@ -26,7 +26,7 @@ exports.getSingleAppointment = catchAsync (async (req, res, next) => {
     });
 });
 
-
+//to be further examined
 exports.createAppointment = catchAsync (async (req, res, next) => {
     const datetime = Date.now();
     const hospital = await Hospital.findOne({name : req.body.hospital});
