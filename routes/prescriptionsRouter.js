@@ -13,6 +13,4 @@ router
     .get(userController.protect, prescriptionsController.getMySelectedPrescription);
 
 
-
-
 module.exports = router;

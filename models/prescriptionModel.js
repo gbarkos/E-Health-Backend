@@ -39,7 +39,7 @@ const prescriptionSchema = new mongoose.Schema({
 });
 
 prescriptionSchema.virtual('active').get( function(){
-    const createdDate = new Date(this.createdAt);
+    const createdDate = new Date(this.createdAt);    
     const expireDate = new Date(createdDate.getFullYear(), createdDate.getMonth(), createdDate.getDate()+30, 23, 59, 59, 999);
     const now = new Date(Date.now());
     if (!this.dispensed && expireDate > now) {
