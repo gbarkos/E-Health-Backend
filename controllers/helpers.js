@@ -2,6 +2,7 @@ const Doctor = require('./../models/doctorModel');
 const Hospital = require('./../models/hospitalModel');
 const Diagnosis = require('./../models/diagnosisModel');
 const Prescription = require('./../models/prescriptionModel');
+const Appointment = require('./../models/appointmentModel');
 
 //Math.floor(Math.random() * (max - min + 1)) + min; 
 
@@ -80,3 +81,24 @@ module.exports.createRandomPrescriptions = async (userID) => {
     }
 }
 
+const createAnAppointment = async (userID) => {
+    const hospital = await findaHospital();
+    const datetime = Date.now();
+
+    const appointment = {
+        hospital: hospital,
+        user: userID,
+        date: datetime
+    }
+
+    const newAppointment = await Appointment.create(appointment);
+}
+
+module.exports.createRandomAppointments = async (userID) => {
+    let j = Math.floor(Math.random() * (10) + 1);
+    console.log("num of appoint: ");
+    console.log(j);
+    for(let i = 1; i<=j; i++) {
+        await createAnAppointment(userID);
+    }
+}
