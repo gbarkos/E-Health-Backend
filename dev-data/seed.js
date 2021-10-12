@@ -4,6 +4,7 @@ const Diagnosis = require('./../models/diagnosisModel');
 const Prescription = require('./../models/prescriptionModel');
 const User = require('./../models/userModel');
 const Appointment = require('./../models/appointmentModel');
+const Department = require('./../models/departmentModel');
 
 const doctorData = [
     {
@@ -41,33 +42,27 @@ const doctorData = [
 const hospitalData = [
     {
         name: "Ippokratio General Hospital",
-        prefecture: "Thessaloniki",
-        departments: ["Pathology", "Neurology"]
+        prefecture: "Thessaloniki"
     },
     {
         name: "General Hospital of Giannitsa",
-        prefecture: "Pella",
-        departments: ["Cardiology", "Dermatology", "Opthalmology"]
+        prefecture: "Pella"
     },
     {
         name: "Sismanogleio General Hospital",
-        prefecture: "Rodopi",
-        departments: ["Radiology"]
+        prefecture: "Rodopi"
     },
     {
         name: "General Hospital of Rethymno",
-        prefecture: "Rethymno",
-        departments: ["Radiology", "Cardiology"]
+        prefecture: "Rethymno"
     },
     {
         name: "Evaggelismos",
-        prefecture: "Attica",
-        departments: ["Cardiology", "Ophtalmology", "Radiology", "Dermatology"]
+        prefecture: "Attica"
     },
     {
         name: "General Hospital of Volos",
-        prefecture: "Magnesia",
-        departments: ["Neurology", "Patholoy"]
+        prefecture: "Magnesia"
     }
 ];
 
