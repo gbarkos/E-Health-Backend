@@ -1,3 +1,4 @@
+const { getDefaultDirectives } = require('helmet/dist/middlewares/content-security-policy');
 const mongoose = require('mongoose');
 
 const diagnosisSchema = new mongoose.Schema({
@@ -17,6 +18,10 @@ const diagnosisSchema = new mongoose.Schema({
         ref: 'Doctor',
         required: [true, 'Diagnosis must have a doctor']
     },
+    createtAt: {
+        type: Date,
+        default: Date.now()
+    }, 
     description:String
     
 });
