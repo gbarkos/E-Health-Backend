@@ -12,6 +12,8 @@ const AppError = require('./utils/appError');
 //Custom dependencies
 const userRouter = require('./routes/userRouter');
 const diagnosisRouter = require('./routes/diagnosisRouter');
+const hospitalRouter = require('./routes/hospitalRouter');
+const shareDiagnosisRouter = require('./routes/shareDiagnosisRouter');
 //app decleration
 const app = express();
 
@@ -53,7 +55,9 @@ app.use((req, res, next) => {
 
 //routes
 app.use('/api/v1/users', userRouter);
-app.use('/api/v1/diagnosis', diagnosisRouter);
+app.use('/api/v1/diagnoses', diagnosisRouter);
+app.use('/api/v1/hospitals', hospitalRouter);
+app.use('/api/v1/shareDiagnoses', shareDiagnosisRouter);
 
 //For all undefined routes throw an error
 app.all('*', (req, res, next) => {
