@@ -14,6 +14,7 @@ const userRouter = require('./routes/userRouter');
 const appointmentRouter = require('./routes/appointmentRouter');
 const prescriptionsRouter = require('./routes/prescriptionsRouter');
 const diagnosisRouter = require('./routes/diagnosisRouter');
+const departmentRouter = require('./routes/departmentRouter');
 
 //app decleration
 const app = express();
