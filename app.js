@@ -59,7 +59,7 @@ app.use('/api/v1/users', userRouter);
 app.use('/api/v1/appointments', appointmentRouter);
 app.use('/api/v1/prescriptions', prescriptionsRouter);
 app.use('/api/v1/diagnosis', diagnosisRouter);
-
+app.use('/api/v1/departments', departmentRouter);
 //For all undefined routes throw an error
 app.all('*', (req, res, next) => {
     next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
