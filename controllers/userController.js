@@ -31,22 +31,23 @@ exports.createUser = catchAsync( async (req, res, next) => {
             familyDoctor
         });
 
+        if(!newUser) {
+            return next(new AppError('Could not save to database', 500));
+        }
+
         const token = signToken( newUser._id);
 
         //Call helper to create a random number of diagnosis for the new user
         await helpers.createRandomDiagnosis(newUser._id);
         await helpers.createRandomPrescriptions(newUser._id);
-
+        await helpers.createRandomAppointments(newUser._id);
         //remove password fron the output
         newUser.password = undefined;
          
         //Send the respond
-        res.status(200).json({
+        res.status(201).json({
             status : 'success',    
-            token,        
-            data: {
-                user: newUser
-            }
+            token
         });
     
 });
@@ -87,12 +88,16 @@ exports.protect = catchAsync(async(req, res, next) => {
         return next(new AppError('You are not logged in! Please login to get access.', 401));
     }
     // 2) Verification token    
-        const secret = process.env.JWT_SECRET;
-        const decoded  = await promisify(jwt.verify)(token, secret);
-        console.log(decoded);
-        const user = await User.findById(decoded.id).populate('familyDoctor');
-        req.user = user;
-        next();
+    const secret = process.env.JWT_SECRET;
+    const decoded  = await promisify(jwt.verify)(token, secret);
+    console.log(decoded);
+    const user = await User.findById(decoded.id).populate('familyDoctor');
+
+    if(!user){
+        return next(new AppError('Token does not belong to an existing user! Please login to get access.', 401));
+    }
+    req.user = user;
+    next();
 });
 
 exports.getMyProfile = (req, res) => {

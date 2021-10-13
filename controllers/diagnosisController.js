@@ -4,14 +4,23 @@ const Diagnosis = require('./../models/diagnosisModel');
 const helpers = require('./helpers');
 const catchAsync = require('./../utils/catchAsync');
 const AppError = require('./../utils/appError');
+const APIFilters = require('./../utils/apiFilters');
 
 
 exports.getAllDiagnoses = catchAsync( async(req, res, next) => {
     const user = req.user;
 
-    diagnoses = await Diagnosis.find({user: user._id}).populate('hospital').populate('doctor');
+    const filters = new APIFilters(Diagnosis.find({user: user._id}), req.query)
+      .filter()
+      .sort()
+      .limitFields()
+      .paginate();
 
-    if(!diagnoses) new AppError('No diagnosis found with that ID', 404);
+    const diagnoses = await filters.query.populate('hospital').populate('doctor');    
+
+    if(!diagnoses) {
+      return next(new AppError('No diagnoses found for this user', 404));
+    } else if (diagnoses.length == 0) return next(new AppError('No diagnoses found with these criteria', 404));
   
     res.status(200).json({
       status: 'success',
@@ -23,7 +32,7 @@ exports.getAllDiagnoses = catchAsync( async(req, res, next) => {
 });
 
 exports.getDiagnosis = catchAsync(async (req, res, next) => {
-    const diagnosis = await Diagnosis.find({ _id: req.params.id }).populate('hospital').populate('doctor');
+    const diagnosis = await Diagnosis.findOne({ _id: req.params.id }).populate('hospital').populate('doctor');
 
     if (!diagnosis) {
       return next(new AppError('No diagnosis found with that ID', 404));

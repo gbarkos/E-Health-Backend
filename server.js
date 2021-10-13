@@ -8,7 +8,7 @@ const dotenv = require('dotenv');
 dotenv.config({path: './config.env'});
 
 //db connection
-const DB = process.env.DATABASE_LOCAL;
+const DB = process.env.DB_REMOTE == "true" ? process.env.DATABASE_REMOTE : process.env.DATABASE_LOCAL;
 mongoose.connect(DB, {
     useNewUrlParser: true,
     useCreateIndex: true,
