@@ -66,7 +66,28 @@ const hospitalData = [
     }
 ];
 
-const deleteData = async (connection) => {
+const insertDepartments = async () => {
+    try{
+        const departments = [];
+        const departmentData = ["Cardiology", "Pneumology", "Opthalmology"];
+        const hospitals = await Hospital.find();
+
+        for(let i in hospitals){
+            for(let j in departmentData){
+                const dep = {
+                    name: departmentData[j],
+                    hospital: hospitals[i]._id
+                };
+                departments.push(dep);
+            }
+        }
+        return departments;
+    }catch(err){
+        console.log(err);
+    }
+}
+
+const deleteData = async () => {
     try{
         await Appointment.deleteMany();
         await Prescription.deleteMany();
@@ -74,6 +95,7 @@ const deleteData = async (connection) => {
         await Doctor.deleteMany();
         await Hospital.deleteMany();
         await User.deleteMany();
+        await Department.deleteMany();
         console.log('DB succesfully dumped');
     }catch(err){
         console.log(err);
@@ -84,7 +106,9 @@ const insertData = async () => {
     try{
         await Doctor.create(doctorData);
         await Hospital.create(hospitalData);
-        console.log('Doctor and Hospital data succesfully inserted');
+        const departmentData = await insertDepartments();
+        await Department.create(departmentData);
+        console.log('Doctor, Hospital and Department data succesfully inserted');
     }catch(err){
         console.log(err);
     }
