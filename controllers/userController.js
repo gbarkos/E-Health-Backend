@@ -31,6 +31,10 @@ exports.createUser = catchAsync( async (req, res, next) => {
             familyDoctor
         });
 
+        if(!newUser) {
+            return next(new AppError('Could not save to database', 500));
+        }
+
         const token = signToken( newUser._id);
 
         //Call helper to create a random number of diagnosis for the new user
