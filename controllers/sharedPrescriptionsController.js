@@ -1,15 +1,22 @@
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 const SharedPrescriptions = require('../models/sharedPrescriptionModel');
+const APIFilters = require('./../utils/apiFilters');
 
 
 exports.getMySharedPrescriptions = catchAsync( async (req, res, next) =>{
 
-    sharedPrescriptions = await SharedPrescriptions.find({user: req.user._id}).populate('hospital').populate('prescription');
+    const filters = new APIFilters(SharedPrescriptions.find({user: req.user._id}), req.query)
+      .filter()
+      .sort()
+      .limitFields()
+      .paginate();
+
+    const sharedPrescriptions = await filters.query.populate('hospital').populate('prescription');
 
     if(!sharedPrescriptions) {
-        return next(new AppError('User has not share any prescription yet', 404));
-    }
+        return next(new AppError('No shared prescriptions found for this user', 404));
+    } else if (sharedPrescriptions.length == 0) return next(new AppError('No shared prescriptions found with these criteria', 404));
 
     //Send the respond
     res.status(200).json({

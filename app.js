@@ -59,7 +59,7 @@ app.use((req, res, next) => {
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/appointments', appointmentRouter);
 app.use('/api/v1/prescriptions', prescriptionsRouter);
-app.use('/api/v1/diagnosis', diagnosisRouter);
+app.use('/api/v1/diagnoses', diagnosisRouter);
 app.use('/api/v1/sharePrescriptions', sharedPrescriptionsRouter);
 
 //For all undefined routes throw an error
