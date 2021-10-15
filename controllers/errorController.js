@@ -35,6 +35,7 @@ module.exports = (err, req, res, next) => {
     let error = { ...err };
     error.message = err.message;
     error.name = err.name;
+    error.timestump = new Date(Date.now()).toLocaleString("el-GR", {timeZone: "Europe/Athens"});
     
     if (error.name === 'CastError') error = handleCastErrorDB(error);
     if (error.code === 11000) error = handleDuplicateFieldsDB(error);
