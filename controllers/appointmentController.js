@@ -16,20 +16,41 @@ exports.getAppointments = catchAsync (async (req, res, next) => {
 });
 
 exports.getAvailableAppointments = catchAsync(async (req, res, next) => {
-    //const user = req.user._id;
-    let appointmentList = ["09:00","09:30","10:00","10:30","11:00","11:30","12:00","12:30","13:00","13:30"];
-    //const department = req.query.department;
-    //const date = req.query.department;
-    //const appointments = await Appointment.find({department: department, date: date});
-    let appointmentsJSON = JSON.parse(JSON.stringify(appointmentList));
+    var appointmentList = ["09:00","09:30","10:00","10:30","11:00","11:30","12:00","12:30","13:00","13:30"];
+    const department = req.query.department;
+    const date = req.query.date;
+    let d1 = new Date(date);
+    let d2 = new Date(d1.getTime() + (86400000));
+    const appointments = await Appointment.find({department: department, date: {$gte: d1, $lt: d2}});
+    console.log(appointments);
+
+    if(appointments === undefined || appointments.length == 0){
+        appointmentList = JSON.parse(JSON.stringify(appointmentList));
+    }else{
+        let unavailable = [];
+        appointments.forEach(el => {
+            let dateObj = new Date(el.date);
+            console.log(dateObj);
+            let formatedDate = dateObj.toISOString().split('T')[1];
+            console.log(formatedDate);
+            let time = formatedDate.split(':');
+            let hour = time[0];
+            let mins = time[1];
+            let filteredDate = hour+":"+mins;
+            console.log(filteredDate);
+            unavailable.push(filteredDate);
+        });
+        appointmentList = appointmentList.filter(val => !unavailable.includes(val));
+        appointmentList = JSON.parse(JSON.stringify(appointmentList));
+        console.log(appointmentList);
+    }
+    
     res.status(200).json({
         status: "success",
         data : {
-            appointmentsJSON
+            appointmentList
         }
-    });
-
-    
+    });   
 });
 
 exports.getSingleAppointment = catchAsync (async (req, res, next) => {
@@ -45,14 +66,16 @@ exports.getSingleAppointment = catchAsync (async (req, res, next) => {
 
 //to be further examined
 exports.createAppointment = catchAsync (async (req, res, next) => {
-    const datetime = Date.now();
-    const hospital = await Hospital.findOne({name : req.body.hospital});
+    const date = req.query.date+"T"+req.query.timeslot+":00.000+00:00";
+    const hospital = req.query.hospital;
+    const department = req.query.department;
     const user = req.user;
 
     const newAppointment = await Appointment.create({
         hospital: hospital,
+        department: department,
         user: user,
-        date: datetime
+        date: date
     });
 
     res.status(200).json({

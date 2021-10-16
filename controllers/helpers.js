@@ -88,9 +88,9 @@ module.exports.createRandomPrescriptions = async (userID) => {
     }
 }
 
-const createAnAppointment = async (userID) => {
+const createAnAppointment = async (userID, timeslot) => {
     const hospital = await findaHospital();
-    const datetime = Date.now();
+    const datetime = new Date("2021-10-16T"+timeslot+":00.00+00:00");
     const department = await findaDepartment();
 
     const appointment = {
@@ -104,10 +104,12 @@ const createAnAppointment = async (userID) => {
 }
 
 module.exports.createRandomAppointments = async (userID) => {
+    const appointmentList = ["09:00","09:30","10:00","10:30","11:00","11:30","12:00","12:30","13:00","13:30"];
     let j = Math.floor(Math.random() * (10) + 1);
     console.log("num of appoint: ");
     console.log(j);
     for(let i = 1; i<=j; i++) {
-        await createAnAppointment(userID);
+        let timeslot = appointmentList.pop();
+        await createAnAppointment(userID, timeslot);
     }
 }
