@@ -3,6 +3,7 @@ const Hospital = require('./../models/hospitalModel');
 const Diagnosis = require('./../models/diagnosisModel');
 const Prescription = require('./../models/prescriptionModel');
 const Appointment = require('./../models/appointmentModel');
+const Department = require('./../models/departmentModel');
 
 //Math.floor(Math.random() * (max - min + 1)) + min; 
 
@@ -25,6 +26,12 @@ const findaHospital = async () => {
     index = Math.floor(Math.random() * (hospitals.length));
 
     return hospitals[index]._id;
+}
+
+const findaDepartment = async () => {
+    const departments = await Department.find({});
+    index = Math.floor(Math.random() * (departments.length));
+    return departments[index]._id;
 }
 
 const createADiagnosis = async (userID) => {
@@ -84,9 +91,11 @@ module.exports.createRandomPrescriptions = async (userID) => {
 const createAnAppointment = async (userID) => {
     const hospital = await findaHospital();
     const datetime = Date.now();
+    const department = await findaDepartment();
 
     const appointment = {
         hospital: hospital,
+        department: department,
         user: userID,
         date: datetime
     }

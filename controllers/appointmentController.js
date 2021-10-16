@@ -5,7 +5,7 @@ const Hospital = require('../models/hospitalModel');
 
 
 exports.getAppointments = catchAsync (async (req, res, next) => {
-    const appointments = await Appointment.find({user: req.user._id, hospital: req.query.hospital }).populate('hospital').populate('user').populate('department');
+    const appointments = await Appointment.find({user: req.user._id }).populate('hospital').populate('user').populate('department');
     if(!appointments) return next(new AppError("No prescriptions found", 404));
     res.status(200).json({
         status: "success",
@@ -17,9 +17,18 @@ exports.getAppointments = catchAsync (async (req, res, next) => {
 
 exports.getAvailableAppointments = catchAsync(async (req, res, next) => {
     //const user = req.user._id;
-    const department = req.query.department;
-    const date = req.query.department;
-    const appointments = await Appointment.find({department: department, date: date});
+    let appointmentList = ["09:00","09:30","10:00","10:30","11:00","11:30","12:00","12:30","13:00","13:30"];
+    //const department = req.query.department;
+    //const date = req.query.department;
+    //const appointments = await Appointment.find({department: department, date: date});
+    let appointmentsJSON = JSON.parse(JSON.stringify(appointmentList));
+    res.status(200).json({
+        status: "success",
+        data : {
+            appointmentsJSON
+        }
+    });
+
     
 });
 
