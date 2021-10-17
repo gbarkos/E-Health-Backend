@@ -32,12 +32,23 @@ const createADiagnosis = async (userID) => {
     const doctor = await this.findaDoctor();
     const hospital = await findaHospital();    
     const description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent gravida facilisis leo, eget eleifend quam faucibus vitae. Etiam sed neque tempor, tristique leo nec, rutrum eros. Ut efficitur lacinia dolor. Proin lobortis interdum finibus. In sagittis pharetra ante auctor dictum. Etiam est purus, ullamcorper a tellus id, hendrerit tincidunt risus."
+    const now =  new Date(Date.now());
+    const createdAt = new Date(
+        now.getFullYear(), 
+        now.getMonth(), 
+        now.getDate()-(Math.floor(Math.random() * (50 - 0 + 1)) + 0), 
+        now.getHours(), 
+        now.getMinutes(), 
+        now.getSeconds(), 
+        now.getMilliseconds()
+    );
 
     const diagnosis = {
-        hospital: hospital,
+        hospital,
         user: userID,
-        doctor: doctor,
-        description: description
+        doctor,
+        description,
+        createdAt
     };
 
     const newDiagnosis = await Diagnosis.create(diagnosis);
@@ -59,13 +70,26 @@ const createAPrescription = async (userID) => {
     const hospital = await findaHospital();
     const medicineArray = ["Acetaminophen", "Cyclobenzaprine", "Pantoprazole", "Xanax", "Naproxen","Fentanyl", "Hydroxychloroquine", "Viagra"];  
     const description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent gravida facilisis leo, eget eleifend quam faucibus vitae. Etiam sed neque tempor, tristique leo nec, rutrum eros. Ut efficitur lacinia dolor. Proin lobortis interdum finibus. In sagittis pharetra ante auctor dictum. Etiam est purus, ullamcorper a tellus id, hendrerit tincidunt risus."
+    const dispensed = (Math.floor(Math.random() * (10 - 0 + 1)) + 0) > 2;
+    const now =  new Date(Date.now());
+    const createdAt = new Date(
+        now.getFullYear(), 
+        now.getMonth(), 
+        now.getDate()-(Math.floor(Math.random() * (50 - 0 + 1)) + 0), 
+        now.getHours(), 
+        now.getMinutes(), 
+        now.getSeconds(), 
+        now.getMilliseconds()
+    );
 
     const prescription = {
-        hospital: hospital,
+        hospital,
         user: userID,
-        doctor: doctor,
+        doctor,
         medicine: medicineArray[Math.floor(Math.random()*(medicineArray.length))],
-        description: description
+        description,
+        dispensed,
+        createdAt
     };
 
     const newDiagnosis = await Prescription.create(prescription);
