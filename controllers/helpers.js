@@ -90,7 +90,10 @@ module.exports.createRandomPrescriptions = async (userID) => {
 
 const createAnAppointment = async (userID, timeslot) => {
     const hospital = await findaHospital();
-    const datetime = new Date("2021-10-16T"+timeslot+":00.00+00:00");
+    const datetime = new Date(Date.now());
+    const time = timeslot.split(':');
+    datetime.setHours(time[0]);
+    datetime.setMinutes(time[1]);
     const department = await findaDepartment();
 
     const appointment = {
