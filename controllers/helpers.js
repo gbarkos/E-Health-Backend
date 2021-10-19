@@ -3,6 +3,7 @@ const Hospital = require('./../models/hospitalModel');
 const Diagnosis = require('./../models/diagnosisModel');
 const Prescription = require('./../models/prescriptionModel');
 const Appointment = require('./../models/appointmentModel');
+const Department = require('./../models/departmentModel');
 
 //Math.floor(Math.random() * (max - min + 1)) + min; 
 
@@ -25,6 +26,12 @@ const findaHospital = async () => {
     index = Math.floor(Math.random() * (hospitals.length));
 
     return hospitals[index]._id;
+}
+
+const findaDepartment = async () => {
+    const departments = await Department.find({});
+    index = Math.floor(Math.random() * (departments.length));
+    return departments[index]._id;
 }
 
 const createADiagnosis = async (userID) => {
@@ -105,12 +112,15 @@ module.exports.createRandomPrescriptions = async (userID) => {
     }
 }
 
-const createAnAppointment = async (userID) => {
-    const hospital = await findaHospital();
-    const datetime = Date.now();
+const createAnAppointment = async (userID, timeslot) => {
+    const datetime = new Date(Date.now());
+    const time = timeslot.split(':');
+    datetime.setHours(time[0], time[1], 00, 000);
+    console.log("inside helpers"+datetime);
+    const department = await findaDepartment();
 
     const appointment = {
-        hospital: hospital,
+        department: department,
         user: userID,
         date: datetime
     }
@@ -119,10 +129,12 @@ const createAnAppointment = async (userID) => {
 }
 
 module.exports.createRandomAppointments = async (userID) => {
+    const appointmentList = ["09:00","09:30","10:00","10:30","11:00","11:30","12:00","12:30","13:00","13:30"];
     let j = Math.floor(Math.random() * (10) + 1);
     console.log("num of appoint: ");
     console.log(j);
     for(let i = 1; i<=j; i++) {
-        await createAnAppointment(userID);
+        let timeslot = appointmentList.pop();
+        await createAnAppointment(userID, timeslot);
     }
 }

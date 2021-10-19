@@ -10,6 +10,10 @@ router
     .post(userController.protect, appointmentController.createAppointment);
 
 router
+    .route('/available')
+    .get(userController.protect, appointmentController.getAvailableAppointments);
+
+router
     .route('/:id')
     .get(userController.protect, appointmentController.getSingleAppointment);
 
