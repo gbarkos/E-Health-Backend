@@ -16,6 +16,12 @@ const prescriptionsRouter = require('./routes/prescriptionsRouter');
 const diagnosisRouter = require('./routes/diagnosisRouter');
 const departmentRouter = require('./routes/departmentRouter');
 
+const hospitalRouter = require('./routes/hospitalRouter');
+const shareDiagnosisRouter = require('./routes/shareDiagnosisRouter');
+
+const sharedPrescriptionsRouter = require('./routes/sharedPrescriptionsRouter');
+
+
 //app decleration
 const app = express();
 
@@ -57,10 +63,17 @@ app.use((req, res, next) => {
 
 //routes
 app.use('/api/v1/users', userRouter);
+
+app.use('/api/v1/diagnoses', diagnosisRouter);
+app.use('/api/v1/hospitals', hospitalRouter);
+app.use('/api/v1/shareDiagnoses', shareDiagnosisRouter);
+
 app.use('/api/v1/appointments', appointmentRouter);
 app.use('/api/v1/prescriptions', prescriptionsRouter);
-app.use('/api/v1/diagnosis', diagnosisRouter);
 app.use('/api/v1/departments', departmentRouter);
+app.use('/api/v1/diagnoses', diagnosisRouter);
+app.use('/api/v1/sharePrescriptions', sharedPrescriptionsRouter);
+
 //For all undefined routes throw an error
 app.all('*', (req, res, next) => {
     next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));

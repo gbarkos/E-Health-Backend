@@ -18,7 +18,7 @@ const diagnosisSchema = new mongoose.Schema({
         ref: 'Doctor',
         required: [true, 'Diagnosis must have a doctor']
     },
-    createtAt: {
+    createdAt: {
         type: Date,
         default: Date.now()
     }, 

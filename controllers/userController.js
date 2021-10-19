@@ -31,6 +31,10 @@ exports.createUser = catchAsync( async (req, res, next) => {
             familyDoctor
         });
 
+        if(!newUser) {
+            return next(new AppError('Could not save to database', 500));
+        }
+
         const token = signToken( newUser._id);
 
         //Call helper to create a random number of diagnosis for the new user
@@ -41,12 +45,9 @@ exports.createUser = catchAsync( async (req, res, next) => {
         newUser.password = undefined;
          
         //Send the respond
-        res.status(200).json({
+        res.status(201).json({
             status : 'success',    
-            token,        
-            data: {
-                user: newUser
-            }
+            token
         });
     
 });

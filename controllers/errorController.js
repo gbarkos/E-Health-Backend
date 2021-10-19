@@ -35,6 +35,7 @@ module.exports = (err, req, res, next) => {
     let error = { ...err };
     error.message = err.message;
     error.name = err.name;
+    error.timestump = new Date(Date.now()).toLocaleString("el-GR", {timeZone: "Europe/Athens"});
     
     if (error.name === 'CastError') error = handleCastErrorDB(error);
     if (error.code === 11000) error = handleDuplicateFieldsDB(error);
@@ -55,8 +56,7 @@ module.exports = (err, req, res, next) => {
     //If the error is not operational do not send the error data to the user
     } else {
         // 1) Log error
-        console.error('ERROR 💥', error);
-        console.error('ERROR 💥', error.stack);
+        console.error('ERROR 💥', error);        
         // 2) Send generic message
         res.status(500).json({
           status: 'error',
