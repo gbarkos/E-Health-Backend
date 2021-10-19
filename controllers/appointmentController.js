@@ -1,11 +1,20 @@
 const Appointment = require('../models/appointmentModel');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
-const Hospital = require('../models/hospitalModel');
-
+const APIFilters = require('./../utils/apiFilters');
 
 exports.getAppointments = catchAsync (async (req, res, next) => {
-    const appointments = await Appointment.find({user: req.user._id }).populate('hospital').populate('user').populate('department');
+    
+    const filters = new APIFilters(Appointment.find({user: req.user._id}), req.query)
+      .filter()
+      .sort()
+      .limitFields()
+      .paginate();
+
+    const appointments = await filters.query.populate('hospital').populate('user').populate('department');
+
+    //const appointments = await Appointment.find({user: req.user._id }).populate('hospital').populate('user').populate('department');
+
     if(!appointments) return next(new AppError("No prescriptions found", 404));
     res.status(200).json({
         status: "success",
