@@ -91,7 +91,7 @@ module.exports.createRandomPrescriptions = async (userID) => {
 const createAnAppointment = async (userID, timeslot) => {
     const datetime = new Date(Date.now());
     const time = timeslot.split(':');
-    datetime.setHours(time[0], time[1], 00);
+    datetime.setHours(time[0], time[1], 00, 000);
     console.log("inside helpers"+datetime);
     const department = await findaDepartment();
 

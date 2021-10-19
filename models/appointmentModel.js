@@ -13,11 +13,14 @@ const appointmentSchema = new mongoose.Schema({
     },
     date:{
         type: Date,
-        required: [true, 'Appointment must have a user'],
-        unique: true
+        required: [true, 'Appointment must have a user']
     }
-
 });
+
+appointmentSchema.index(
+    {department: 1, date: 1},
+    {unique: true}
+);
 
 const Appointment = mongoose.model('Appointment', appointmentSchema);
 module.exports = Appointment;
