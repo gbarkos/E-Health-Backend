@@ -32,7 +32,7 @@ exports.shareAPrescription = catchAsync( async (req, res, next) => {
     const newSharedPrescription = await SharedPrescriptions.create({
         hospital: req.body.hospital,
         prescription: req.body.prescription,
-        user: req.body.user
+        user: req.user
     });
 
     if(!newSharedPrescription) {

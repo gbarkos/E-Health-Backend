@@ -5,7 +5,7 @@ const SharedDiagnoses = require('../models/sharedDiagnosisModel');
 exports.shareDiagnosis= catchAsync( async(req, res, next) => {
     const shareADiagnosis = await SharedDiagnoses.create({
         hospital: req.body.hospital,
-        user: req.body.user,
+        user: req.user,
         diagnosis: req.body.diagnosis
     });
 
