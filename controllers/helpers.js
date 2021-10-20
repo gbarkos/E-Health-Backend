@@ -37,7 +37,7 @@ const findaDepartment = async () => {
 const createADiagnosis = async (userID) => {
     
     const doctor = await this.findaDoctor();
-    const hospital = await findaHospital();    
+    const department = await findaDepartment();    
     const description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent gravida facilisis leo, eget eleifend quam faucibus vitae. Etiam sed neque tempor, tristique leo nec, rutrum eros. Ut efficitur lacinia dolor. Proin lobortis interdum finibus. In sagittis pharetra ante auctor dictum. Etiam est purus, ullamcorper a tellus id, hendrerit tincidunt risus."
     const now =  new Date(Date.now());
     const createdAt = new Date(
@@ -51,7 +51,7 @@ const createADiagnosis = async (userID) => {
     );
 
     const diagnosis = {
-        hospital,
+        department,
         user: userID,
         doctor,
         description,
@@ -74,7 +74,7 @@ module.exports.createRandomDiagnosis = async (userID) => {
 const createAPrescription = async (userID) => {
     
     const doctor = await this.findaDoctor();
-    const hospital = await findaHospital();
+    const department = await findaDepartment();
     const medicineArray = ["Acetaminophen", "Cyclobenzaprine", "Pantoprazole", "Xanax", "Naproxen","Fentanyl", "Hydroxychloroquine", "Viagra"];  
     const description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent gravida facilisis leo, eget eleifend quam faucibus vitae. Etiam sed neque tempor, tristique leo nec, rutrum eros. Ut efficitur lacinia dolor. Proin lobortis interdum finibus. In sagittis pharetra ante auctor dictum. Etiam est purus, ullamcorper a tellus id, hendrerit tincidunt risus."
     const dispensed = (Math.floor(Math.random() * (10 - 0 + 1)) + 0) > 2;
@@ -90,7 +90,7 @@ const createAPrescription = async (userID) => {
     );
 
     const prescription = {
-        hospital,
+        department,
         user: userID,
         doctor,
         medicine: medicineArray[Math.floor(Math.random()*(medicineArray.length))],

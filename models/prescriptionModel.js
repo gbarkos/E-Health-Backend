@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
 
 const prescriptionSchema = new mongoose.Schema({
-    hospital:{
+    department:{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Hospital',
-        required: [true, 'prescription must have a hospital']
+        ref: 'Department',
+        required: [true, 'prescription must have a department']
     },
     user:{
         type: mongoose.Schema.Types.ObjectId,

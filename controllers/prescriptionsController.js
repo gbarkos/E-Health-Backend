@@ -12,7 +12,7 @@ exports.getMyPrescriptions = catchAsync( async (req, res, next) => {
       .limitFields()
       .paginate();
 
-    const prescriptions = await filters.query.populate('doctor').populate('hospital');
+    const prescriptions = await filters.query.populate('doctor').populate({path: 'department', populate: {path: 'hospital'}});
 
     if(!prescriptions) {
         return next(new AppError('No prescriptions found for this user', 404));
@@ -29,7 +29,7 @@ exports.getMyPrescriptions = catchAsync( async (req, res, next) => {
 
 exports.getMySelectedPrescription = catchAsync( async (req, res, next) => {
 
-    prescription = await Prescription.findOne({ user: req.user._id, _id: req.params.id }).populate('doctor').populate('hospital');
+    prescription = await Prescription.findOne({ user: req.user._id, _id: req.params.id }).populate('doctor').populate({path: 'department', populate: {path: 'hospital'}});
 
     if(!prescription) {
         return next(new AppError('Prescription not found', 404));

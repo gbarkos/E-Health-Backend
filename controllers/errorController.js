@@ -9,8 +9,15 @@ const handleDuplicateFieldsDB = err => {
     
   const duplicated = err.keyValue;
   const key = Object.keys(duplicated);
+  console.log(key);
+  let message = ""
+  if(key.length == 1 && key[0] == 'amka') {
+    message = `User with ${key.toString().toUpperCase()}: ${duplicated[key]} already exists!`;
+  } else {
+    const date = new Date(duplicated['date']).toLocaleString("en-GB", {timeZone: "Europe/Athens"});
+    message = `There is not available appointment in this department on ${date.substring(0, date.length - 3)}`;
+  }
   
-  const message = `User with ${key.toString().toUpperCase()}: ${duplicated[key]} already exists!`;
   return new AppError(message, 400);
 };
 
