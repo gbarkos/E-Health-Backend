@@ -11,7 +11,7 @@ exports.getAppointments = catchAsync (async (req, res, next) => {
       .limitFields()
       .paginate();
 
-    const appointments = await filters.query.populate('hospital').populate('user').populate('department');
+    const appointments = await filters.query.populate({path:'department', populate:{path:'hospital'}});
 
     //const appointments = await Appointment.find({user: req.user._id }).populate('hospital').populate('user').populate('department');
 
@@ -73,7 +73,7 @@ exports.getAvailableAppointments = catchAsync(async (req, res, next) => {
 });
 
 exports.getSingleAppointment = catchAsync (async (req, res, next) => {
-    const appointment = await Appointment.findOne({_id: req.params.id}).populate('hospital').populate('user');
+    const appointment = await Appointment.findOne({_id: req.params.id}).populate({path:'department', populate:{path:'hospital'}});
     if(!appointment) return next(new AppError("Appointment not found", 404));
     res.status(200).json({
         status: "success",
@@ -88,7 +88,7 @@ exports.createAppointment = catchAsync (async (req, res, next) => {
     const time = req.body.timeslot.split(':');
     date.setHours(time[0], time[1], 00, 000);
     const department = req.body.department;
-    const user = req.user;
+    const user = req.user._id;
 
     const newAppointment = await Appointment.create({
         department: department,
@@ -96,10 +96,7 @@ exports.createAppointment = catchAsync (async (req, res, next) => {
         date: date
     });
 
-    res.status(200).json({
+    res.status(201).json({
         status : 'success',           
-        data: {
-            newAppointment
-        }
     });
 });
