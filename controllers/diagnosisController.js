@@ -16,7 +16,7 @@ exports.getAllDiagnoses = catchAsync( async(req, res, next) => {
       .limitFields()
       .paginate();
 
-    const diagnoses = await filters.query.populate('hospital').populate('doctor');    
+    const diagnoses = await filters.query.populate({path: 'department', populate:{path:'hospital'}}).populate('doctor');    
 
     if(!diagnoses) {
       return next(new AppError('No diagnoses found for this user', 404));
@@ -32,7 +32,7 @@ exports.getAllDiagnoses = catchAsync( async(req, res, next) => {
 });
 
 exports.getDiagnosis = catchAsync(async (req, res, next) => {
-    const diagnosis = await Diagnosis.findOne({ _id: req.params.id }).populate('hospital').populate('doctor');
+    const diagnosis = await Diagnosis.findOne({ _id: req.params.id }).populate({path: 'department', populate:{path:'hospital'}}).populate('doctor');
 
     if (!diagnosis) {
       return next(new AppError('No diagnosis found with that ID', 404));

@@ -2,10 +2,10 @@ const { getDefaultDirectives } = require('helmet/dist/middlewares/content-securi
 const mongoose = require('mongoose');
 
 const diagnosisSchema = new mongoose.Schema({
-    hospital:{
+    department:{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Hospital',
-        required: [true, 'Diagnosis must have a hospital']
+        ref: 'Department',
+        required: [true, 'Diagnosis must have a department']
     },
     user:{
         type: mongoose.Schema.Types.ObjectId,
