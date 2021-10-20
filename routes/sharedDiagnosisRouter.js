@@ -1,6 +1,6 @@
 const express = require('express');
-const userController = require('./../controllers/userController');
-const shareDiagnosisController = require('./../controllers/shareDiagnosisController');
+const userController = require('../controllers/userController');
+const shareDiagnosisController = require('../controllers/sharedDiagnosisController');
 
 
 const router = express.Router();

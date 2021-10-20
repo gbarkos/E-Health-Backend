@@ -1,7 +1,7 @@
-const catchAsync = require('./../utils/catchAsync');
-const AppError = require('./../utils/appError');
+const catchAsync = require('../utils/catchAsync');
+const AppError = require('../utils/appError');
 const SharedDiagnoses = require('../models/sharedDiagnosisModel');
-const APIFilters = require('./../utils/apiFilters');
+const APIFilters = require('../utils/apiFilters');
 
 exports.shareDiagnosis= catchAsync( async(req, res, next) => {
     const shareADiagnosis = await SharedDiagnoses.create({

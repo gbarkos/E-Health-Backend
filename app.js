@@ -12,14 +12,14 @@ const AppError = require('./utils/appError');
 //Custom dependencies
 const userRouter = require('./routes/userRouter');
 const appointmentRouter = require('./routes/appointmentRouter');
-const prescriptionsRouter = require('./routes/prescriptionsRouter');
+const prescriptionRouter = require('./routes/prescriptionRouter');
 const diagnosisRouter = require('./routes/diagnosisRouter');
 const departmentRouter = require('./routes/departmentRouter');
 
 const hospitalRouter = require('./routes/hospitalRouter');
-const shareDiagnosisRouter = require('./routes/shareDiagnosisRouter');
+const sharedDiagnosisRouter = require('./routes/sharedDiagnosisRouter');
 
-const sharedPrescriptionsRouter = require('./routes/sharedPrescriptionsRouter');
+const sharedPrescriptionRouter = require('./routes/sharedPrescriptionRouter');
 
 
 //app decleration
@@ -66,13 +66,13 @@ app.use('/api/v1/users', userRouter);
 
 app.use('/api/v1/diagnoses', diagnosisRouter);
 app.use('/api/v1/hospitals', hospitalRouter);
-app.use('/api/v1/shareDiagnoses', shareDiagnosisRouter);
+app.use('/api/v1/shareDiagnoses', sharedDiagnosisRouter);
 
 app.use('/api/v1/appointments', appointmentRouter);
-app.use('/api/v1/prescriptions', prescriptionsRouter);
+app.use('/api/v1/prescriptions', prescriptionRouter);
 app.use('/api/v1/departments', departmentRouter);
 app.use('/api/v1/diagnoses', diagnosisRouter);
-app.use('/api/v1/sharePrescriptions', sharedPrescriptionsRouter);
+app.use('/api/v1/sharePrescriptions', sharedPrescriptionRouter);
 
 //For all undefined routes throw an error
 app.all('*', (req, res, next) => {

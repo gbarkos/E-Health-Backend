@@ -1,7 +1,7 @@
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 const SharedPrescriptions = require('../models/sharedPrescriptionModel');
-const APIFilters = require('./../utils/apiFilters');
+const APIFilters = require('../utils/apiFilters');
 
 
 exports.getMySharedPrescriptions = catchAsync( async (req, res, next) =>{

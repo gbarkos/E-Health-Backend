@@ -1,7 +1,7 @@
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 const Prescription = require('../models/prescriptionModel');
-const APIFilters = require('./../utils/apiFilters');
+const APIFilters = require('../utils/apiFilters');
 
 //GET method for Prescriptions 
 exports.getMyPrescriptions = catchAsync( async (req, res, next) => {

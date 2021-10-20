@@ -1,6 +1,6 @@
 const express = require('express');
 const userController = require('../controllers/userController');
-const sharedPrescriptionsController = require('./../controllers/sharedPrescriptionsController');
+const sharedPrescriptionsController = require('../controllers/sharedPrescriptionController');
 
 const router = express.Router();
 
