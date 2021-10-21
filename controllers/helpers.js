@@ -43,11 +43,11 @@ const createADiagnosis = async (userID) => {
     const createdAt = new Date(
         now.getFullYear(), 
         now.getMonth(), 
-        now.getDate()-(Math.floor(Math.random() * (50 - 0 + 1)) + 0), 
+        now.getDate(),
         now.getHours(), 
         now.getMinutes(), 
         now.getSeconds(), 
-        now.getMilliseconds()
+        now.getMilliseconds()-(Math.floor(Math.random() * ((50 * 24 * 60 * 60 * 1000) - 0 + 1)) + 0) 
     );
 
     const diagnosis = {
@@ -82,11 +82,11 @@ const createAPrescription = async (userID) => {
     const createdAt = new Date(
         now.getFullYear(), 
         now.getMonth(), 
-        now.getDate()-(Math.floor(Math.random() * (50 - 0 + 1)) + 0), 
+        now.getDate(), 
         now.getHours(), 
         now.getMinutes(), 
         now.getSeconds(), 
-        now.getMilliseconds()
+        now.getMilliseconds()-(Math.floor(Math.random() * ((50 * 24 * 60 * 60 * 1000) - 0 + 1)) + 0) 
     );
 
     const prescription = {
