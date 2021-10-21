@@ -6,7 +6,7 @@ const dotenv = require('dotenv');
 
 //environment variables config
 dotenv.config({path: './config.env'});
-
+process.env.TZ = 'Europe/Athens'
 //db connection
 const DB = process.env.DB_REMOTE == "true" ? process.env.DATABASE_REMOTE : process.env.DATABASE_LOCAL;
 mongoose.connect(DB, {
