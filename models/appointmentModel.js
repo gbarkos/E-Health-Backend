@@ -1,10 +1,19 @@
 const mongoose = require('mongoose');
+const Department = require('./departmentModel');
 
 const appointmentSchema = new mongoose.Schema({
     department:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Department',
-        required: [true, 'Appointment must have a department']
+        required: [true, 'Appointment must have a department'],
+        validate:{
+            validator: async function(value){
+                const dep = await Department.find({_id: value});
+
+                return  (dep && dep.length > 0);
+            },
+            message:`Department with this id does not exists`
+        }
     },
     user:{
         type: mongoose.Schema.Types.ObjectId,

@@ -5,6 +5,8 @@ const Prescription = require('./../models/prescriptionModel');
 const User = require('./../models/userModel');
 const Appointment = require('./../models/appointmentModel');
 const Department = require('./../models/departmentModel');
+const SharedPrescription = require('./../models/sharedPrescriptionModel');
+const SharedDiagnosis = require('./../models/sharedDiagnosisModel');
 
 const doctorData = [
     {
@@ -96,6 +98,8 @@ const deleteData = async () => {
         await Hospital.deleteMany();
         await User.deleteMany();
         await Department.deleteMany();
+        await SharedPrescription.deleteMany();
+        await SharedDiagnosis.deleteMany();
         console.log('DB succesfully dumped');
     }catch(err){
         console.log(err);

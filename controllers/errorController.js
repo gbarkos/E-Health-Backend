@@ -11,11 +11,15 @@ const handleDuplicateFieldsDB = err => {
   const key = Object.keys(duplicated);
   console.log(key);
   let message = ""
-  if(key.length == 1 && key[0] == 'amka') {
+  if(key.indexOf('amka') != -1) {
     message = `User with ${key.toString().toUpperCase()}: ${duplicated[key]} already exists!`;
-  } else {
+  } else if(key.indexOf('date') != -1 && key.indexOf('department') != -1){
     const date = new Date(duplicated['date']).toLocaleString("en-GB", {timeZone: "Europe/Athens"});
-    message = `There is not available appointment in this department on ${date.substring(0, date.length - 3)}`;
+    message = `There is not available appointment in this department on ${date.substring(0, date.length - 3)}!`;
+  } else if(key.indexOf('hospital') != -1 && key.length == 2) {
+    message = `This ${key[0]} is already shared with the selected hospital!`;
+  } else {
+    message = 'An entry with these values already exists!'
   }
   
   return new AppError(message, 400);
@@ -58,12 +62,12 @@ module.exports = (err, req, res, next) => {
             message: error.message
         });
       
-        console.error('ERROR 💥', error);
+        console.error('ERROR 💥', err);
         //console.error('ERROR 💥', error.stack);
     //If the error is not operational do not send the error data to the user
     } else {
         // 1) Log error
-        console.error('ERROR 💥', error);        
+        console.error('ERROR 💥', err);        
         // 2) Send generic message
         res.status(500).json({
           status: 'error',
