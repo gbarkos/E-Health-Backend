@@ -26,7 +26,7 @@ const sharedPrescriptionSchema = new mongoose.Schema({
 
                 return  (presc && presc.length > 0);
             },
-            message:`Hospital with this id does not exists`
+            message:`Prescription with this id does not exists`
         }
     },
     user: {
