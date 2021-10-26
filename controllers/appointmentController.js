@@ -38,9 +38,7 @@ exports.getAvailableAppointments = catchAsync(async (req, res, next) => {
     const appointments = await Appointment.find({department: department, date: {$gte: today, $lt: tomorrow}});
     console.log(appointments);
 
-    if(appointments.length == 0){
-        appointmentList = Object.assign({}, appointmentList);
-    }else{
+    if(appointments.length != 0) {
         let unavailable = [];
         appointments.forEach(appointment => {
             // let dateObj = new Date(el.date);
@@ -60,9 +58,9 @@ exports.getAvailableAppointments = catchAsync(async (req, res, next) => {
             unavailable.push(timeslot);
         });
         appointmentList = appointmentList.filter(val => !unavailable.includes(val));
-        appointmentList = Object.assign({}, appointmentList);
-        console.log(appointmentList);
-    }
+    }    
+        
+    
     
     res.status(200).json({
         status: "success",

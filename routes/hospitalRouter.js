@@ -6,4 +6,6 @@ const router = express.Router();
 
 router.get('/', userController.protect, hospitalController.getHospitals);
 
+router.get('/havingPresc/:precId', userController.protect, hospitalController.getHospitals);
+
 module.exports = router;

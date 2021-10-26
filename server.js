@@ -17,7 +17,7 @@ mongoose.connect(DB, {
 }).then(() => console.log("DB connection succesfull"));
 
 //seed database
-seedDB();
+//seedDB();
 
 //start server
 const PORT = process.env.PORT || 3000;
