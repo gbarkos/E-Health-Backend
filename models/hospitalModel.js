@@ -10,10 +10,6 @@ const hospitalSchema = new mongoose.Schema({
     prefecture:{
         type: String,
         required: [true, 'Hospital must have a prefecture']
-    },
-    departments:{
-        type: [String],
-        required: [true, 'Hospital must have departments']
     }
 });
 const Hospital = mongoose.model('Hospital', hospitalSchema);

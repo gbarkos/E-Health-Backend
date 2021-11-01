@@ -1,18 +1,23 @@
 //dependencies
 const mongoose = require('mongoose');
 const app = require('./app');
+const seedDB = require('./dev-data/seed');
 const dotenv = require('dotenv');
 
 //environment variables config
 dotenv.config({path: './config.env'});
-
+process.env.TZ = 'Europe/Athens'
 //db connection
-const DB = process.env.DATABASE_LOCAL;
+const DB = process.env.DB_REMOTE == "true" ? process.env.DATABASE_REMOTE : process.env.DATABASE_LOCAL;
 mongoose.connect(DB, {
     useNewUrlParser: true,
     useCreateIndex: true,
-    useFindAndModify: false
+    useFindAndModify: false,
+    useUnifiedTopology: true
 }).then(() => console.log("DB connection succesfull"));
+
+//seed database
+//seedDB();
 
 //start server
 const PORT = process.env.PORT || 3000;
