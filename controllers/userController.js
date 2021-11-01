@@ -40,9 +40,9 @@ exports.createUser = catchAsync( async (req, res, next) => {
         //Call helper to create a random number of diagnosis for the new user
         await helpers.createRandomDiagnosis(newUser._id);
         await helpers.createRandomPrescriptions(newUser._id);
-        await helpers.createRandomAppointments(newUser._id);
+        //await helpers.createRandomAppointments(newUser._id);
         //remove password fron the output
-        newUser.password = undefined;
+        //newUser.password = undefined;
          
         //Send the respond
         res.status(201).json({
